@@ -10,7 +10,7 @@ public class Ad extends BaseBean {
     private String imgFileName;
     private String link;
     private Long weight;
-    private String img;
+
 
     public String getTitle() {
         return title;
@@ -43,11 +43,4 @@ public class Ad extends BaseBean {
         this.weight = weight;
     }
 
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String  img) {
-        this.img = img;
-    }
 }
