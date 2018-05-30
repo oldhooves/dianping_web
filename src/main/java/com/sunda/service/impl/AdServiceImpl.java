@@ -1,9 +1,11 @@
 package com.sunda.service.impl;
 
+
 import com.sunda.bean.Ad;
 import com.sunda.dao.AdDao;
 import com.sunda.dto.AdDto;
 import com.sunda.service.AdService;
+import com.sunda.util.FileUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -74,16 +76,42 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public boolean remove(Long id) {
-        return false;
+        Ad ad = adDao.selectById(id);
+        int deleteRows = adDao.delete(id);
+        FileUtil.delete(adImageSavePath + ad.getImgFileName());
+        return deleteRows == 1;
     }
 
     @Override
     public AdDto getById(Long id) {
-        return null;
+        AdDto result = new AdDto();
+        Ad ad = adDao.selectById(id);
+        BeanUtils.copyProperties(ad, result);
+        result.setImg(adImageUrl + ad.getImgFileName());
+        return result;
     }
 
     @Override
     public boolean modify(AdDto adDto) {
-        return false;
+        Ad ad = new Ad();
+        BeanUtils.copyProperties(adDto, ad);
+        String fileName = null;
+        if (adDto.getImgFile() != null && adDto.getImgFile().getSize() > 0) {
+            try {
+                fileName = FileUtil.save(adDto.getImgFile(), adImageSavePath);
+                ad.setImgFileName(fileName);
+            } catch (IllegalStateException | IOException e) {
+                // TODO 需要添加日志
+                return false;
+            }
+        }
+        int updateCount = adDao.update(ad);
+        if (updateCount != 1) {
+            return false;
+        }
+        if (fileName != null) {
+            return FileUtil.delete(adImageSavePath + adDto.getImgFileName());
+        }
+        return true;
     }
 }
