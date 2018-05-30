@@ -8,7 +8,7 @@
 		 values(#{title},#{imgFileName},#{link},#{weight})
 	</insert>
 	
-	<select id="selectByPage" resultType="Ad">
+	<select id="selectByPage" resultType="com.sunda.bean.Ad">
 		select id,title,img_file_name,link,weight from ad
 		<where>
 			<if test="title != null and title != ''">
@@ -18,7 +18,7 @@
 		order by weight desc,id
 	</select>
 	
-	<select id="selectById" resultType="Ad">
+	<select id="selectById" resultType="com.sunda.bean.Ad">
 		select id,title,img_file_name,link,weight from ad where id=#{_parameter}
 	</select>
 	

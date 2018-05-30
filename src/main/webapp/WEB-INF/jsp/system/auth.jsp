@@ -188,11 +188,11 @@
 
         <!-- 用户组树右键菜单 -->
         <div id="groupMenu" class="rMenu" onmouseout="divOut();" onmouseover="divOver()">
-            <ul class="rMenuUi">
-                <li class="rMenuLi" onmousemove="move(this);" onclick="initAddGroup();">新增</li>
-                <li class="rMenuLi disabled" onmousemove="move(this);" onclick="modifyOfMenu();">修改</li>
-                <li class="rMenuLi disabled" onmousemove="move(this);" onclick="removeGroup();">删除</li>
-            </ul>
+			<ul class="rMenuUi">
+				<li class="rMenuLi" onmousemove="move(this);" onclick="initAddGroup();">新增</li>
+				<li class="rMenuLi disabled" onmousemove="move(this);" onclick="modifyOfMenu();">修改</li>
+				<li class="rMenuLi disabled" onmousemove="move(this);" onclick="removeGroup();">删除</li>
+			</ul>
         </div>
 
         <!-- 菜单树右键菜单 -->
