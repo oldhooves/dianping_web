@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.imooc.dao.DicDao">
-	<select id="select" resultType="Dic">
+<mapper namespace="com.sunda.dao.DicDao">
+	<select id="select" resultType="com.sunda.bean.Dic">
 		select * from dic where type=#{type}
 		order by weight
 	</select>
