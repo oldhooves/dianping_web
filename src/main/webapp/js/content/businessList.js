@@ -3,7 +3,8 @@ function remove(id) {
 	$("#mainForm").submit();
 }
 
-function search() {
+function search(currentPage) {
+	$("#currentPage").val(currentPage);
 	$("#mainForm").attr("method","GET");
 	$("#mainForm").attr("action",$("#basePath").val() + "/businesses");
 	$("#mainForm").submit();

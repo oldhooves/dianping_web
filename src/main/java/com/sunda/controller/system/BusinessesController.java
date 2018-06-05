@@ -91,6 +91,8 @@ public class BusinessesController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String modify(BusinessDto dto,Model model) {
 		model.addAttribute("modifyObj",dto);
+		model.addAttribute("cityList", dicService.getListByType(DicTypeConst.CITY));
+		model.addAttribute("categoryList", dicService.getListByType(DicTypeConst.CATEGORY));
 		if (businessService.modify(dto)) {
 			model.addAttribute(PageCodeEnum.KEY, PageCodeEnum.MODIFY_SUCCESS);
 		} else {
