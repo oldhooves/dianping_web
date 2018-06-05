@@ -94,8 +94,6 @@ public class BusinessServiceImpl implements BusinessService {
 			result.getData().add(businessDtoTemp);
 			BeanUtils.copyProperties(business, businessDtoTemp);
 			businessDtoTemp.setImg(url + business.getImgFileName());
-			// 为兼容前端mumber这个属性
-			businessDtoTemp.setNumber(business.getNumber());
 			businessDtoTemp.setStar(this.getStar(business));
 		}
 

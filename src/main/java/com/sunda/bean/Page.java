@@ -16,7 +16,7 @@ public class Page {
 	
 	public Page() {
 	    this.currentPage = 1;
-	    this.pageNumber = 4;
+	    this.pageNumber = 5;
 	}
 
 	public int getTotalNumber() {

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.imooc.dao.MemberDao">
-	<select id="select" resultType="Member">
+<mapper namespace="com.sunda.dao.MemberDao">
+	<select id="select" resultType="com.sunda.bean.Member">
 		select * from Member
 		<where>
 			<if test="phone != null and phone != ''">
