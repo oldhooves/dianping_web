@@ -3,14 +3,17 @@ package com.sunda.bean;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import java.util.Date;
+
 @JsonInclude(Include.NON_NULL)
-public class Orders {
+public class Orders extends BaseBean {
 	private Long id;
 	private Long memberId;
 	private Long businessId;
 	private Integer num;
 	private Integer commentState;
 	private Double price;
+	private Date createTime;
 	private Business business;
 	private Member member;
 	
@@ -50,6 +53,15 @@ public class Orders {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
 	public Business getBusiness() {
 		return business;
 	}

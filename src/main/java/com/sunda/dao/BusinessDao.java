@@ -49,4 +49,6 @@ public interface BusinessDao {
     int delete(long id);
 
     int update(Business business);
+
+    void updateNumber(Map<String, Date> map);
 }

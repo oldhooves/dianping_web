@@ -4,9 +4,9 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.imooc.dao.SysParamDao">
+<mapper namespace="com.sunda.dao.SysParamDao">
 
-	<select id="selectByKey" resultType="SysParam">
+	<select id="selectByKey" resultType="com.sunda.bean.SysParam">
 		select param_key,param_value,param_desc from sys_param where param_key = #{_parameter}
 	</select>
 	

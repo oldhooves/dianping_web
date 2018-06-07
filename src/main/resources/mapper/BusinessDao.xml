@@ -85,10 +85,15 @@
 		order by id
 	</select>
 	
-	<!--<update id="updateNumber">-->
-		<!--update business b,(select business_id,count(*) cou from orders group by business_id) c-->
-		<!--set b.number=b.number + c.cou where b.id=c.business_id-->
-	<!--</update>-->
+	<update id="updateNumber">
+		UPDATE business b,
+		(SELECT business_id,create_time,COUNT(*) cou FROM orders
+		<if test="startTime != null">
+			WHERE (SELECT TIMESTAMPDIFF(SECOND,#{startTime},create_time)) &gt;= 0
+		</if>
+		GROUP BY business_id) c
+		SET b.number=b.number + c.cou WHERE b.id=c.business_id
+	</update>
 	
 	<update id="updateStar">
 		update business b,

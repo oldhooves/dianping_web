@@ -2,27 +2,27 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.imooc.dao.OrdersDao">
-	<resultMap type="Orders" id="OrdersResultMap">
+<mapper namespace="com.sunda.dao.OrdersDao">
+	<resultMap type="com.sunda.bean.Orders" id="OrdersResultMap">
 		<id column="id" property="id" />
 		<result column="comment_state" property="commentState" />
 		<result column="price" property="price" />
-		<association property="business" javaType="Business">
+		<association property="business" javaType="com.sunda.bean.Business">
 			<result column="img_file_name" property="imgFileName"/>
 			<result column="title" property="title"/>
 			<result column="number" property="number"/>
 		</association>
-		<association property="member" javaType="Member">
+		<association property="member" javaType="com.sunda.bean.Member">
 			<result column="phone" property="phone"/>
 		</association>
 	</resultMap>
 
 	<insert id="insert">
-		insert into orders(business_id,member_id,num,comment_state,price)
-		 values(#{businessId},#{memberId},#{num},#{commentState},#{price})
+		insert into orders(business_id,member_id,num,comment_state,price,create_time)
+		 values(#{businessId},#{memberId},#{num},#{commentState},#{price},#{createTime})
 	</insert>
 	
-	<select id="selectById" resultType="Orders">
+	<select id="selectById" resultType="com.sunda.bean.Orders">
 		select id,business_id,member_id,num,comment_state,price
 		from orders where id=#{_parameter}
 	</select>
@@ -42,6 +42,13 @@
 		from orders o,business b where o.business_id=b.id
 		<if test="memberId != null">
 			and o.member_id = #{memberId}
+		</if>
+	</select>
+	
+	<select id="selectAll" resultType="com.sunda.bean.Orders">
+		SELECT orders.* FROM  orders WHERE 1=1
+		<if test="memberId != null ">
+			AND member_id=#{memberId}
 		</if>
 	</select>
 </mapper>

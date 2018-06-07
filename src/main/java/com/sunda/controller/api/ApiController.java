@@ -4,13 +4,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunda.bean.Ad;
 import com.sunda.constant.ApiCodeEnum;
-import com.sunda.dto.AdDto;
-import com.sunda.dto.ApiCodeDto;
-import com.sunda.dto.BusinessDto;
-import com.sunda.dto.BusinessListDto;
+import com.sunda.dto.*;
 import com.sunda.service.AdService;
 import com.sunda.service.BusinessService;
 import com.sunda.service.MemberService;
+import com.sunda.service.OrdersService;
 import com.sunda.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +35,9 @@ public class ApiController {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private OrdersService ordersService;
 
     @Value("${ad.number}")
     private int adNumber;
@@ -145,6 +146,38 @@ public class ApiController {
         return apiCodeDto;
     }
 
+    /**
+     * 订单列表
+     */
+    @RequestMapping(value = "/orderlist/{username}", method = RequestMethod.GET)
+    public List<OrdersDto> orderlist(@PathVariable("username") Long username) {
+        // 根据手机号取出会员ID
+        Long memberId = memberService.getIdByPhone(username);
+        return ordersService.getListByMemberId(memberId);
+    }
+
+    /**
+     * 买单
+     */
+    @RequestMapping(value = "/order", method = RequestMethod.POST)
+    public ApiCodeDto order(OrderForBuyDto orderForBuyDto) {
+        ApiCodeDto apiCodeDto;
+        // 1、校验token是否有效（缓存中是否存在这样一个token，并且对应存放的会员信息（这里指的是手机号）与提交上来的信息一致）
+        Long phone = memberService.getPhone(orderForBuyDto.getToken());
+        if (phone != null && phone.equals(orderForBuyDto.getUsername())) {
+            //2.根据手机号获取会员主键
+            Long memberId = memberService.getIdByPhone(phone);
+            if (ordersService.save(orderForBuyDto, memberId)) {
+                //3.保存订单
+                apiCodeDto = new ApiCodeDto(ApiCodeEnum.SUCCESS);
+            } else {
+                apiCodeDto = new ApiCodeDto(ApiCodeEnum.BUY_FAIL);
+            }
+        } else {
+            apiCodeDto = new ApiCodeDto(ApiCodeEnum.NOT_LOGGED);
+        }
+        return apiCodeDto;
+    }
 
 
 }
