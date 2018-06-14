@@ -3,12 +3,10 @@ package com.sunda.controller.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunda.bean.Ad;
+import com.sunda.bean.Comment;
 import com.sunda.constant.ApiCodeEnum;
 import com.sunda.dto.*;
-import com.sunda.service.AdService;
-import com.sunda.service.BusinessService;
-import com.sunda.service.MemberService;
-import com.sunda.service.OrdersService;
+import com.sunda.service.*;
 import com.sunda.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +36,9 @@ public class ApiController {
 
     @Autowired
     private OrdersService ordersService;
+
+    @Autowired
+    private CommentService commentService;
 
     @Value("${ad.number}")
     private int adNumber;
@@ -177,6 +178,34 @@ public class ApiController {
             apiCodeDto = new ApiCodeDto(ApiCodeEnum.NOT_LOGGED);
         }
         return apiCodeDto;
+    }
+
+    /**
+     * 提交评论
+     */
+    @RequestMapping(value = "/submitComment", method = RequestMethod.POST)
+    public ApiCodeDto submitComment(CommentForSubmitDto dto) {
+        ApiCodeDto result;
+        // 1、校验登录信息：token、手机号
+        Long phone = memberService.getPhone(dto.getToken());
+        if (phone != null && phone.equals(dto.getUsername())) {
+            // 2、根据手机号取出会员ID
+            Long memberId = memberService.getIdByPhone(phone);
+            // 3、根据提交上来的订单ID获取对应的会员ID，校验与当前登录的会员是否一致
+            OrdersDto ordersDto = ordersService.getById(dto.getId());
+            if(ordersDto.getMemberId().equals(memberId)) {
+                // 4、保存评论
+                commentService.add(dto);
+                result = new ApiCodeDto(ApiCodeEnum.SUCCESS);
+                // TODO
+                // 5、还有一件重要的事未做
+            } else {
+                result = new ApiCodeDto(ApiCodeEnum.NO_AUTH);
+            }
+        } else {
+            result = new ApiCodeDto(ApiCodeEnum.NOT_LOGGED);
+        }
+        return result;
     }
 
 
