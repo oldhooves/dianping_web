@@ -21,7 +21,7 @@ public class CommentController {
     @RequestMapping
     public String init(Model model) {
         CommentDto commentDto = new CommentDto();
-        model.addAttribute("list",commentService.getListByConditioin(commentDto));
+        model.addAttribute("commentList",commentService.getListByConditioin(commentDto));
         model.addAttribute("searchParam",commentDto);
         return "/content/commentList";
     }

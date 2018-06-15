@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunda.bean.Ad;
 import com.sunda.bean.Comment;
+import com.sunda.bean.Page;
 import com.sunda.constant.ApiCodeEnum;
 import com.sunda.dto.*;
 import com.sunda.service.*;
@@ -208,5 +209,12 @@ public class ApiController {
         return result;
     }
 
+    /**
+     * 详情页 - 用户评论
+     */
+    @RequestMapping(value = "/detail/comment/{currentPage}/{businessId}", method = RequestMethod.GET)
+    public CommentListDto detail(@PathVariable("businessId") Long businessId,Page page) {
+        return commentService.getListByBusinessId(businessId,page);
+    }
 
 }

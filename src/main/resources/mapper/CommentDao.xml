@@ -8,6 +8,7 @@
 		<result column="comment" property="comment" />
 		<result column="star" property="star" />
 		<result column="create_time" property="createTime" />
+		<result column="orders_id" property="ordersId"/>
 		<association property="orders" resultMap="com.sunda.dao.OrdersDao.OrdersResultMap"/>
 	</resultMap>
 
