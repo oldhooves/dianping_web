@@ -4,8 +4,8 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.imooc.dao.ActionDao">
-	<resultMap type="Action" id="ActionResultMap">
+<mapper namespace="com.sunda.dao.ActionDao">
+	<resultMap type="com.sunda.bean.Action" id="ActionResultMap">
 		<id column="action_id" property="id"/>
 		<result column="action_name" property="name"/>
 		<result column="action_url" property="url"/>
@@ -41,7 +41,7 @@
 		where t.id=#{id}
 	</update>
 	
-	<select id="selectById" resultType="Action">
+	<select id="selectById" resultType="com.sunda.bean.Action">
 		select id,name,url,menu_id,method from sys_action where id=#{_parameter}
 	</select>
 </mapper>

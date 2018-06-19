@@ -4,8 +4,8 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.imooc.dao.ReportDao">
-	<select id="countOrder" resultType="java.util.HashMap">
+<mapper namespace="com.sunda.dao.ReportDao">
+	<select id="countOrder" resultType="java.util.Map">
 		select d.name categoryName,date_format(o.create_time,'%H') `hour`,cast(count(1) as CHAR) `count`
 		from business b,orders o,dic d
 		where b.id=o.business_id and b.category=d.code

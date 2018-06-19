@@ -4,14 +4,14 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.imooc.dao.MenuDao">
+<mapper namespace="com.sunda.dao.MenuDao">
 	
-	<resultMap type="Menu" id="MenuResultMap">
+	<resultMap type="com.sunda.bean.Menu" id="MenuResultMap">
 		<id column="id" property="id" />
 		<id column="name" property="name" />
 		<id column="url" property="url" />
 		<id column="parent_id" property="parentId" />
-		<collection property="actionList" javaType="list" resultMap="org.imooc.dao.ActionDao.ActionResultMap"/>
+		<collection property="actionList" javaType="list" resultMap="com.sunda.dao.ActionDao.ActionResultMap"/>
 	</resultMap>
 
 	<select id="selectWithAction" resultMap="MenuResultMap">
@@ -27,7 +27,7 @@
 		order by m.order_num,convert(a.name using gbk) collate gbk_chinese_ci
 	</select>
 	
-	<select id="select" resultType="Menu">
+	<select id="select" resultType="com.sunda.bean.Menu">
 		select t.id,t.name,t.url,t.parent_id from sys_menu t
 		<where>
 			<if test="parentId != null">
@@ -43,7 +43,7 @@
 		,ifnull((select max(order_num)+1 from sys_menu where parent_id=#{parentId}),1)
 	</insert>
 	
-	<select id="selectById" resultType="Menu">
+	<select id="selectById" resultType="com.sunda.bean.Menu">
 		select id,name,url,parent_id,order_num from sys_menu t where t.id = #{_parameter}
 	</select>
 	

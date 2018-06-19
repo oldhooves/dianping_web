@@ -4,8 +4,8 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.imooc.dao.UserDao">
-	<select id="select" resultType="User">
+<mapper namespace="com.sunda.dao.UserDao">
+	<select id="select" resultType="com.sunda.bean.User">
 		select id,ch_name,name,group_id from sys_user t
 		<where>
 			<if test="name != null">
@@ -27,7 +27,7 @@
 		 where not exists(select 1 from sys_user where name=#{name})
 	</insert>
 	
-	<select id="selectById" resultType="User">
+	<select id="selectById" resultType="com.sunda.bean.User">
 		select id,ch_name,name,group_id from sys_user where id = #{_parameter}
 	</select>
 	
